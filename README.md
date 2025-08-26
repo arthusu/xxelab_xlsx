@@ -229,4 +229,4 @@ Este laboratorio ha sido diseñado para ser autoexplicativo. Para debugging:
 
 **Happy Hacking! 🔥** 
 
-*Recuerda: Solo utiliza estas técnicas en entornos autorizados como TryHackMe, HackTheBox o tu propio laboratorio.*
+*Recuerda: Solo utiliza estas técnicas en entornos autorizados como tu propio laboratorio.*
