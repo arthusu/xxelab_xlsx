@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Parser Lab - XXE Vulnerability Demo</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">📊</span>
+                    <h1>Excel Parser Lab</h1>
+                </div>
+                <div class="lab-badge">
+                    <span class="badge-text">XXE Lab Environment</span>
+                </div>
+            </div>
+            <p class="subtitle">Sistema de procesamiento de archivos Excel para análisis de datos empresariales</p>
+        </header>
+
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            <span class="warning-icon">⚠️</span>
+            <div class="warning-content">
+                <strong>Entorno de Laboratorio:</strong> Esta aplicación contiene vulnerabilidades intencionalmente para fines educativos y pruebas de penetración autorizadas.
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Upload Section -->
+            <div class="card upload-card">
+                <div class="card-header">
+                    <h2>📤 Subir Archivo Excel</h2>
+                    <p>Selecciona un archivo .xlsx para procesar y extraer datos</p>
+                </div>
+                
+                <form action="process.php" method="post" enctype="multipart/form-data" class="upload-form">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="excel-file" name="excel_file" accept=".xlsx,.xlsm" required>
+                        <label for="excel-file" class="file-input-label">
+                            <span class="file-icon">📁</span>
+                            <span class="file-text">Seleccionar archivo Excel (.xlsx, .xlsm)</span>
+                            <span class="file-subtext">Máximo 10MB</span>
+                        </label>
+                    </div>
+                    
+                    <div class="processing-options">
+                        <h3>Opciones de Procesamiento</h3>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="extract_sheets" checked>
+                                <span class="checkmark"></span>
+                                Extraer información de hojas
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="parse_metadata" checked>
+                                <span class="checkmark"></span>
+                                Analizar metadatos del archivo
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="validate_structure" checked>
+                                <span class="checkmark"></span>
+                                Validar estructura XML
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="upload-button">
+                        <span class="button-icon">🔄</span>
+                        Procesar Archivo
+                    </button>
+                </form>
+            </div>
+
+            <!-- Info Section -->
+            <div class="card info-card">
+                <div class="card-header">
+                    <h2>ℹ️ Información del Sistema</h2>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3>Formatos Soportados</h3>
+                        <ul>
+                            <li>.xlsx (Excel 2007+)</li>
+                            <li>.xlsm (Excel con macros)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3>Características</h3>
+                        <ul>
+                            <li>Análisis de estructura OOXML</li>
+                            <li>Extracción de datos de celdas</li>
+                            <li>Procesamiento de metadatos</li>
+                            <li>Validación de contenido XML</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-item">
+                        <h3>Limitaciones</h3>
+                        <ul>
+                            <li>Tamaño máximo: 10MB</li>
+                            <li>Solo archivos Excel modernos</li>
+                            <li>Procesamiento síncrono</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Uploads -->
+            <div class="card recent-card">
+                <div class="card-header">
+                    <h2>📋 Actividad Reciente</h2>
+                </div>
+                
+                <div class="recent-list" id="recent-uploads">
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <span class="recent-name">sample_data.xlsx</span>
+                            <span class="recent-date">Procesado hace 2 horas</span>
+                        </div>
+                        <span class="recent-status success">✅ Exitoso</span>
+                    </div>
+                    
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <span class="recent-name">financial_report.xlsx</span>
+                            <span class="recent-date">Procesado hace 5 horas</span>
+                        </div>
+                        <span class="recent-status success">✅ Exitoso</span>
+                    </div>
+                    
+                    <div class="recent-item">
+                        <div class="recent-info">
+                            <span class="recent-name">inventory.xlsx</span>
+                            <span class="recent-date">Procesado ayer</span>
+                        </div>
+                        <span class="recent-status error">❌ Error</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Excel Parser Lab - Entorno de Pruebas XXE</p>
+                <p class="footer-warning">⚠️ Solo para uso educativo y pruebas autorizadas</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // File input enhancement
+        const fileInput = document.getElementById('excel-file');
+        const fileLabel = document.querySelector('.file-input-label .file-text');
+        const fileSubtext = document.querySelector('.file-subtext');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const fileName = file.name;
+                const fileSize = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+                fileLabel.textContent = fileName;
+                fileSubtext.textContent = `Tamaño: ${fileSize}`;
+            } else {
+                fileLabel.textContent = 'Seleccionar archivo Excel (.xlsx, .xlsm)';
+                fileSubtext.textContent = 'Máximo 10MB';
+            }
+        });
+
+        // Form submission enhancement
+        document.querySelector('.upload-form').addEventListener('submit', function(e) {
+            const button = document.querySelector('.upload-button');
+            const buttonIcon = button.querySelector('.button-icon');
+            const originalText = button.textContent;
+            
+            button.disabled = true;
+            buttonIcon.textContent = '⏳';
+            button.innerHTML = '<span class="button-icon">⏳</span> Procesando...';
+            
+            // Reset button after a delay (in case of errors)
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerHTML = '<span class="button-icon">🔄</span> Procesar Archivo';
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
